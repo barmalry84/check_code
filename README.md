@@ -187,7 +187,7 @@ python3 small_framework.py --action raise --config configuration/vpc.json --regi
 python3 small_framework.py --action raise --config configuration/small_application.json --region eu-west-1 --service application --stack_definition tg,alb,asg,cwalarms --env prod --version 1
 ```
 
-*Wait 5-10 minutes. Check output for loadbalancer_dns_name or find it in AWS console. Open in browser http://loadbalancer_dns_name.*
+*Wait 5-10 minutes after terrafrom finishes. Check output for loadbalancer_dns_name or find it in AWS console. Open in browser http://loadbalancer_dns_name.*
 
 **How to delete stack and VPC:**
 
@@ -197,7 +197,7 @@ python3 small_framework.py --action raise --config configuration/small_applicati
 
 ```sh
 export TF_VAR_target_group_arn=value
-export TF_VAR_ scaling_in_policy=value
+export TF_VAR_scaling_in_policy=value
 export TF_VAR_scaling_out_policy=value
 
 python3 small_framework.py --action destroy --config configuration/small_application.json --region eu-west-1 --service application --stack_definition asg,cwalarms,alb,tg --env prod --version 1
