@@ -4,17 +4,10 @@ This is a code for deploying web-applications using VPC/EC2/ALB/CloudWatch in AW
 Example of docker application is taken from here: https://github.com/autopilotpattern/hello-world.
 The automation includes:
 
-1. Terraform modules:
-
-1.1 vpc - creation of AWS VPC with Private/Public Subnets/NAT Gateways/Internet Gateway/Security Groups etc
-1.2 tg - creation of target group
-1.3 alb - creation of Application Load Balancer
-1.4 asg - creation of Autoscaling Group with Scaling in/out policies.
-1.5 cwalarms - creation of Cloud Watch alarms based on CPU Utilization.
-
+1. Terraform modules for VPC, Traget Group, Application Load Balancer, Autoscaling group, CloudWatch alarms
 2. Python3 small self-written framework for dealing with creation/deletion AWS resources, managing terraform modules and variables
 3. Configuration files for AWS resources and application
-4. Dockerfile to run framework locally or on CI system.
+4. Dockerfile to run framework locally or on CI system
 
 Details
 1. AWS resources and security
