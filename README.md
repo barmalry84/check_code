@@ -1,10 +1,11 @@
 Basic information.
 
-This is code for deploying web-applications using VPC/EC2/ALB/CloudWatch in AWS.
+This is a code for deploying web-applications using VPC/EC2/ALB/CloudWatch in AWS.
 Example of docker application is taken from here: https://github.com/autopilotpattern/hello-world.
 The automation includes:
 
 1. Terraform modules:
+
 1.1 vpc - creation of AWS VPC with Private/Public Subnets/NAT Gateways/Internet Gateway/Security Groups etc
 1.2 tg - creation of target group
 1.3 alb - creation of Application Load Balancer
