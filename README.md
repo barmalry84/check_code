@@ -32,7 +32,7 @@ VPC/EC2/S3/CloudWatch write permissions
 
 2. Application managing
 For task I'm using EC2 instance USERDATA with bash script for installing/running small "Hello World" application.
-
+```sh
 #!/bin/bash
 
 yum update -y
@@ -43,6 +43,7 @@ chmod +x /usr/local/bin/docker-compose
 git clone https://github.com/autopilotpattern/hello-world.git
 cd hello-world
 docker-compose up -d
+```
 
 3. Scaling and monitoring
 The installation includes in-built basic CloudWatch monitoring for EC2/ALB/ASG/TG.
@@ -55,7 +56,7 @@ Basically configuration files keep terraform variable in json format. Before run
 correct values. Files are located under the configuration folder.
 
 Example of VPC configuration:
-
+```sh
 {
   "default": {
     "default": {
@@ -73,9 +74,10 @@ Example of VPC configuration:
       }
     }
 }
+```
 
 Example of application stack configuration:
-
+```sh
 {
   "default": {
     "default": {
@@ -151,29 +153,36 @@ Example of application stack configuration:
     }
   }
 }
-
+```
 5. How to create application
 5.1 Create environment for testing:
 
+```sh
 git pull https://github.com/barmalry84/check_code.git
 cd check_code
 docker build -t little_framework:latest .
 docker run -ti -v `pwd`:/tmp/little_framework -v ~/.aws:/root/.aws:ro little_framework:latest
+```
 
 5.2 Make sure that you have AWS configuration file in ~/.aws or you have exported valid AWS_SECURITY_TOKEN AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
 5.3 Check framework
 
+```sh
 cd /tmp/little_framework
 python3 small_framework.py -h
+```
 
 5.4 (Optional) Fill vpc configuration file and create VPC in AWS account
 
+```sh
 python3 small_framework.py --action raise --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
+```
 
 5.5 Fill application configuration file and run
-
+```sh
 python small_framework.py --action raise --config configuration/small_application.json --region eu-west-1 --service application --stack_definition tg,alb,asg,cwalarms --env prod --version 1
+```
 
 5.6 Wait 5-10 minutes. Check output for loadbalancer_dns_name or find it in AWS console. Open in browser http://loadbalancer_dns_name.
 
@@ -182,16 +191,19 @@ python small_framework.py --action raise --config configuration/small_applicatio
 
 Find next terraform output variables in state file in s3 bucket or in output of stack creation and export them directly to the shell:
 
+```sh
 export TF_VAR_target_group_arn=value
 export TF_VAR_ scaling_in_policy=value
 export TF_VAR_scaling_out_policy=value
 
 python3 small_framework.py --action destroy --config configuration/small_application.json --region eu-west-1 --service application --stack_definition asg,cwalarms,alb,tg --env prod --version 1
+```
 
 6.6 (Optional) Delete VPC
 
+```sh
 python3 small_framework.py --action destroy --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
-
+```
 
 Please note that for every module separate terraform state file will be created under {bucket}/{environment}/{version} path.
 
