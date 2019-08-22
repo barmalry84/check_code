@@ -14,7 +14,7 @@ Example of docker application is taken from here: https://github.com/autopilotpa
 
 **AWS resources and security:**
 
-In order to be secure, I suggest to run compliant application in AWS VPC private subnets. Application is 
+In order to be compliant with security best practicies, I suggest to run application in AWS VPC private subnets. Application is 
 accessible for external customers only through external Application Load Balancer DNS name via 80 port.
 You can use existing VPC in your account or could create one within framework.
 On top of VPC we place application stack based on Target Group, Application Load Balancer and Autoscaling Group.
@@ -22,9 +22,9 @@ On top of VPC we place application stack based on Target Group, Application Load
 **Prerequisites (are NOT covered by framework, you need to create them first):**
 
 1. Valid AWS account
-2. Valid AWS configuration file under ~/.aws OR valid AWS Environment variables OR valid AWS assumed role with
+2. Valid AWS configuration file under ~/.aws OR valid AWS access variables with
 VPC/EC2/S3/CloudWatch write permissions
-3. Existing S3 bucket for terraform state files opened for write permission access from step 2
+3. Existing S3 bucket for terraform state files opened for write access
 4. Existing EC2 Instance Profile with EC2 and CloudWatch Admin permission access
 5. Existing AWS Key for EC2
 
