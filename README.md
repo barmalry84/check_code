@@ -1,12 +1,12 @@
-**Basic information.**
+**Basic information**
 
 This is a code for deploying web-applications using VPC/EC2/ALB/CloudWatch in AWS.
 Example of docker application is taken from here: https://github.com/autopilotpattern/hello-world.
 
 **The automation includes:**
 
-1. Terraform modules for VPC, Traget Group, Application Load Balancer, Autoscaling group, CloudWatch alarms
-2. Python3 small self-written framework for dealing with creation/deletion AWS resources, managing terraform modules and variables
+1. Terraform modules for VPC, Target Group, Application Load Balancer, Autoscaling group, CloudWatch alarms
+2. Python3 framework(created in scope of the test task) for dealing with creation/deletion AWS resources, managing terraform modules and variables
 3. Configuration files for AWS resources and application
 4. Dockerfile to run framework locally or on CI system
 
@@ -14,8 +14,8 @@ Example of docker application is taken from here: https://github.com/autopilotpa
 
 **AWS resources and security:**
 
-I suggest that to be security compliant application should be running in AWS VPC private subnets. Application can be only
-accessible for external customers through external Application Load Balancer DNS name via 80 port.
+In order to be secure, I suggest to run compliant application in AWS VPC private subnets. Application is 
+accessible for external customers only through external Application Load Balancer DNS name via 80 port.
 You can use existing VPC in your account or could create one within framework.
 On top of VPC we place application stack based on Target Group, Application Load Balancer and Autoscaling Group.
 
@@ -24,13 +24,13 @@ On top of VPC we place application stack based on Target Group, Application Load
 1. Valid AWS account
 2. Valid AWS configuration file under ~/.aws OR valid AWS Environment variables OR valid AWS assumed role with
 VPC/EC2/S3/CloudWatch write permissions
-3. Existing S3 bucket for terraform state files opened for write permissions from step 2
-4. Existing EC2 Instance Profile with EC2 and CloudWatch Admin permissions
+3. Existing S3 bucket for terraform state files opened for write permission access from step 2
+4. Existing EC2 Instance Profile with EC2 and CloudWatch Admin permission access
 5. Existing AWS Key for EC2
 
 **Application managing:**
 
-For task I'm using EC2 instance USERDATA with bash script for installing/running small "Hello World" application.
+For the task I'm using EC2 instance USERDATA with bash script for installing/running small "Hello World" application.
 ```sh
 #!/bin/bash
 
@@ -47,13 +47,12 @@ docker-compose up -d
 **Scaling and monitoring:**
 
 The installation includes in-built basic CloudWatch monitoring for EC2/ALB/ASG/TG.
-Also scaling IN/OUT is included. For that reason terraform module includes creation of "Scaling Policies" based on some alarm event created by "cwalarms" module.
-For test application I suggest to use 'CPUUtilization' metric for that alarm. If threshold for 'CPUUtilization' is more than certain value then ScalingOUT action
-scales out application and vise versa.
+Scaling IN/OUT is also included. For that purpose terraform module includes creation of "Scaling Policies" based on some alarm event, created by "cwalarms" module.
+For test application I suggest to use 'CPUUtilization' metric for that alarm. If threshold for 'CPUUtilization' is more than a certain value then ScalingOUT action scales out application and vice versa.
 
 **Configuration files:**
 
-Basically configuration files keep terraform variable in json format. Before running resources creation you need to fill out files with
+Configuration files store terraform variable in json format. Before running creation of resources, you need to fill files with
 correct values. Files are located under the configuration folder.
 
 Example of VPC configuration:
@@ -209,6 +208,6 @@ python3 small_framework.py --action destroy --config configuration/small_applica
 python3 small_framework.py --action destroy --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
 ```
 
-Please note that for every module separate terraform state file will be created under {bucket}/{environment}/{version} path.
+Please note, that for every module separate terraform state file will be created under {bucket}/{environment}/{version} path.
 
 
