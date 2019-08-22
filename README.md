@@ -10,7 +10,7 @@ The automation includes:
 4. Dockerfile to run framework locally or on CI system
 
 Details
-1. AWS resources and security
+1. AWS resources and security:
 I suggest that to be security compliant application should be running in AWS VPC private subnets. Application can be only
 accessible for external customers through external Application Load Balancer DNS name via 80 port.
 You can use existing VPC in your account or could create one within framework.
@@ -24,7 +24,7 @@ VPC/EC2/S3/CloudWatch write permissions
 4. Existing EC2 Instance Profile with EC2 and CloudWatch Admin permissions
 5. Existing AWS Key for EC2
 
-2. Application managing
+2. Application managing:
 For task I'm using EC2 instance USERDATA with bash script for installing/running small "Hello World" application.
 ```sh
 #!/bin/bash
@@ -39,13 +39,13 @@ cd hello-world
 docker-compose up -d
 ```
 
-3. Scaling and monitoring
+3. Scaling and monitoring:
 The installation includes in-built basic CloudWatch monitoring for EC2/ALB/ASG/TG.
 Also scaling IN/OUT is included. For that reason terraform module includes creation of "Scaling Policies" based on some alarm event created by "cwalarms" module.
 For test application I suggest to use 'CPUUtilization' metric for that alarm. If threshold for 'CPUUtilization' is more than certain value then ScalingOUT action
 scales out application and vise versa.
 
-4. Configuration files
+4. Configuration files:
 Basically configuration files keep terraform variable in json format. Before running resources creation you need to fill out files with
 correct values. Files are located under the configuration folder.
 
@@ -148,7 +148,7 @@ Example of application stack configuration:
   }
 }
 ```
-5. How to create application
+5. How to create application:
 5.1 Create environment for testing:
 
 ```sh
@@ -160,28 +160,28 @@ docker run -ti -v `pwd`:/tmp/little_framework -v ~/.aws:/root/.aws:ro little_fra
 
 5.2 Make sure that you have AWS configuration file in ~/.aws or you have exported valid AWS_SECURITY_TOKEN AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN
 
-5.3 Check framework
+5.3 Check framework:
 
 ```sh
 cd /tmp/little_framework
 python3 small_framework.py -h
 ```
 
-5.4 (Optional) Fill vpc configuration file and create VPC in AWS account
+5.4 (Optional) Fill vpc configuration file and create VPC in AWS account:
 
 ```sh
 python3 small_framework.py --action raise --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
 ```
 
-5.5 Fill application configuration file and run
+5.5 Fill application configuration file and run:
 ```sh
 python small_framework.py --action raise --config configuration/small_application.json --region eu-west-1 --service application --stack_definition tg,alb,asg,cwalarms --env prod --version 1
 ```
 
 5.6 Wait 5-10 minutes. Check output for loadbalancer_dns_name or find it in AWS console. Open in browser http://loadbalancer_dns_name.
 
-6. How to delete stack and VPC
-6.1 Delete application stack
+6. How to delete stack and VPC:
+6.1 Delete application stack:
 
 Find next terraform output variables in state file in s3 bucket or in output of stack creation and export them directly to the shell:
 
@@ -193,7 +193,7 @@ export TF_VAR_scaling_out_policy=value
 python3 small_framework.py --action destroy --config configuration/small_application.json --region eu-west-1 --service application --stack_definition asg,cwalarms,alb,tg --env prod --version 1
 ```
 
-6.6 (Optional) Delete VPC
+6.6 (Optional) Delete VPC:
 
 ```sh
 python3 small_framework.py --action destroy --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
