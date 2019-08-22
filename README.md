@@ -158,7 +158,7 @@ Example of application stack configuration:
 ```
 **How to create application**
 
-**Create environment for testing:**
+***Create environment for testing:***
 
 ```sh
 git pull https://github.com/barmalry84/check_code.git
@@ -167,33 +167,33 @@ docker build -t little_framework:latest .
 docker run -ti -v `pwd`:/tmp/little_framework -v ~/.aws:/root/.aws:ro little_framework:latest
 ```
 
-**Make sure that you have AWS configuration file in ~/.aws or you have exported valid AWS_SECURITY_TOKEN AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN**
+*Make sure that you have AWS configuration file in ~/.aws or you have exported valid AWS_SECURITY_TOKEN AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_SESSION_TOKEN*
 
-**Check framework:**
+***Check framework:***
 
 ```sh
 cd /tmp/little_framework
 python3 small_framework.py -h
 ```
 
-**(Optional) Fill vpc configuration file and create VPC in AWS account:**
+***(Optional) Fill vpc configuration file and create VPC in AWS account:***
 
 ```sh
 python3 small_framework.py --action raise --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
 ```
 
-**Fill application configuration file and run:**
+***Fill application configuration file and run:***
 ```sh
 python small_framework.py --action raise --config configuration/small_application.json --region eu-west-1 --service application --stack_definition tg,alb,asg,cwalarms --env prod --version 1
 ```
 
-**Wait 5-10 minutes. Check output for loadbalancer_dns_name or find it in AWS console. Open in browser http://loadbalancer_dns_name.**
+*Wait 5-10 minutes. Check output for loadbalancer_dns_name or find it in AWS console. Open in browser http://loadbalancer_dns_name.*
 
 **How to delete stack and VPC:**
 
-**Delete application stack:**
+***Delete application stack:***
 
-**Find next terraform output variables in state file in s3 bucket or in output of stack creation and export them directly to the shell:**
+***Find next terraform output variables in state file in s3 bucket or in output of stack creation and export them directly to the shell:***
 
 ```sh
 export TF_VAR_target_group_arn=value
@@ -203,7 +203,7 @@ export TF_VAR_scaling_out_policy=value
 python3 small_framework.py --action destroy --config configuration/small_application.json --region eu-west-1 --service application --stack_definition asg,cwalarms,alb,tg --env prod --version 1
 ```
 
-**(Optional) Delete VPC:**
+***(Optional) Delete VPC:***
 
 ```sh
 python3 small_framework.py --action destroy --config configuration/vpc.json --region eu-west-1 --service application --stack_definition vpc --env prod --version 1
