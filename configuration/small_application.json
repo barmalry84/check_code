@@ -1,0 +1,75 @@
+{
+  "default": {
+    "default": {
+      "asg_instance_profile": "arn:aws:iam::XXXXXXXXXXXX:instance-profile/check-code-test",
+      "state_bucket": "check-code-test",
+      "state_bucket_region": "eu-west-1",
+      "service_name": "application"
+    },
+    "eu-west-1": {
+      "vpc_id": "vpc-0e8141f50ac5b2c82",
+      "tg_name": "application",
+      "alb_name": "application-alb",
+      "tg_health_check_path": "/index.html",
+      "tg_health_check_interval": 30,
+      "tg_health_check_timeout": 25,
+      "tg_health_check_unhealthy_threshold": 6,
+      "tg_health_check_healthy_threshold": 2,
+      "alb_security_groups": ["sg-04bdc51aaf93b05f7"],
+      "alb_subnets": ["subnet-08520fda8edb84472", "subnet-0ccde9c2224e635ad"],
+      "alb_listener_http": "True",
+      "alb_listener_https": "False",
+      "lc_key_name": "check-code-test",
+      "lc_iam_instance_profile": "check-code-test",
+      "lc_instance_type": "t2.small",
+      "lc_root_block_device_volume_size": 12,
+      "asg_health_check_grace_period": 600,
+      "asg_health_check_type": "EC2",
+      "asg_poll_delay": 300,
+      "asg_max_wait": 3600,
+      "asg_max_size": 1,
+      "asg_min_size": 1,
+      "asg_desired_capacity":1,
+      "asg_default_cooldown": 300,
+      "asg_name": "application-asg",
+      "asg_scaling_in_adjustment": "-1",
+      "asg_scaling_out_adjustment": "5",
+      "asg_scaling_cooldown": 300,
+      "asg_vpc_zone_identifier": ["subnet-0aa1e60364e6b8566", "subnet-0e416194b6e1c936d"],
+      "lc_image_id": "ami-0bbc25e23a7640b9b",
+      "lc_security_groups": ["sg-00d74b273a133b72f"],
+      "cw_asg_alarms_in": [
+        {
+            "name_suffix": "_CPUUtilization_SCALEIN",
+            "comparison_operator": "LessThanOrEqualToThreshold",
+            "evaluation_periods": 30,
+            "metric_name": "CPUUtilization",
+            "namespace": "AWS/EC2",
+            "period": 60,
+            "statistic": "Average",
+            "threshold": 30,
+            "actions_enabled": true,
+            "alarm_description": "CPUUtilization",
+            "treat_missing_data": "missing",
+            "unit": "Percent"
+          }
+      ],
+      "cw_asg_alarms_out": [
+          {
+            "name_suffix": "_CPUUtilization_SCALEOUT",
+            "comparison_operator": "GreaterThanOrEqualToThreshold",
+            "evaluation_periods": 5,
+            "metric_name": "CPUUtilization",
+            "namespace": "AWS/EC2",
+            "period": 60,
+            "statistic": "Average",
+            "threshold": 70,
+            "actions_enabled": true,
+            "alarm_description": "CPUUtilization",
+            "treat_missing_data": "missing",
+            "unit": "Percent"
+          }
+      ]
+    }
+  }
+}

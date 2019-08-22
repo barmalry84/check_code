@@ -1,0 +1,17 @@
+{
+  "default": {
+    "default": {
+      "state_bucket": "check-code-test",
+      "state_bucket_region": "eu-west-1"
+    },
+      "eu-west-1": {
+        "availability_zones": "eu-west-1a,eu-west-1b",
+        "private_subnet_cidrs": "10.0.128.0/18,10.0.192.0/18",
+        "public_subnet_cidrs": "10.0.0.0/18,10.0.64.0/18",
+        "elb_access_ranges": "0.0.0.0/0",
+        "vpc_cidr": "10.0.0.0/16",
+        "elb_access_ports": "80",
+        "elb_backend-port-rule1": "80"
+      }
+    }
+}
