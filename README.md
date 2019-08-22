@@ -62,9 +62,9 @@ Example of VPC configuration:
   "default": {
     "default": {
       "state_bucket": "check-code-test", //existing s3 bucket for keeping state files
-      "state_bucket_region": "eu-west-1" // region for bucket for keeping state files
+      "state_bucket_region": "eu-west-1" // bucket region for keeping state files
     },
-      "eu-west-1": { // where to create VPC
+      "eu-west-1": { // region where to create VPC
         "availability_zones": "eu-west-1a,eu-west-1b", // which availability zones to use
         "private_subnet_cidrs": "10.0.128.0/18,10.0.192.0/18", // ranges for private networks
         "public_subnet_cidrs": "10.0.0.0/18,10.0.64.0/18", // ranges for public networks
@@ -85,12 +85,12 @@ Example of application stack configuration:
     "default": {
       "asg_instance_profile": "arn:aws:iam::XXXXXXXXXXXX:instance-profile/check-code-test", // existing instance profile to attach to ec2
       "state_bucket": "check-code-test", //existing s3 bucket for keeping state files
-      "state_bucket_region": "eu-west-1", // region for bucket for keeping state files
+      "state_bucket_region": "eu-west-1", // bucket region for keeping state files
       "service_name": "application" //application name
     },
     "eu-west-1": {
       "vpc_id": "vpc-0e8141f50ac5b2c82", // VPC ID (existing or can be taken from VPC creation step)
-      "tg_name": "application", // Target grouo name
+      "tg_name": "application", // Target group name
       "alb_name": "application-alb", // ALB name
       "tg_health_check_path": "/index.html", //healthcheck for application
       "tg_health_check_interval": 30, // Target group health parameter
